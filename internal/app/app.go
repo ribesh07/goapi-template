@@ -1,11 +1,13 @@
 package app
 
 import (
+	"fmt"
 	"goapi/internal/database"
 	"goapi/internal/handlers"
 	"goapi/internal/repository"
 	"goapi/internal/routes"
-	service "goapi/internal/services"
+	"goapi/internal/service"
+	"net/http"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -13,6 +15,11 @@ import (
 func New() *chi.Mux {
 
 	r := chi.NewRouter()
+
+	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintln(w, "Go API Server Running")
+	})
 
 	// Database
 	db := database.Connect()

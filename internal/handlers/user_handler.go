@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	service "goapi/internal/services"
+	service "goapi/internal/service"
 )
 
 type UserHandler struct {
