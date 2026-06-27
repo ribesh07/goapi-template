@@ -1,25 +1,22 @@
 package repository
 
 import (
+	"context"
+	db "goapi/internal/store"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type UserRepository struct {
-	db *pgxpool.Pool
+	queries *db.Queries
 }
 
-func NewUserRepository(db *pgxpool.Pool) *UserRepository {
-
+func NewUserRepository(pool *pgxpool.Pool) *UserRepository {
 	return &UserRepository{
-		db: db,
+		queries: db.New(pool),
 	}
 }
 
-func (r *UserRepository) GetUsers() []string {
-
-	return []string{
-		"Guru",
-		"Ram",
-		"Hari",
-	}
+func (r *UserRepository) GetUsers(ctx context.Context) ([]db.User, error) {
+	return r.queries.GetUsers(ctx)
 }

@@ -20,9 +20,11 @@ func NewUserHandler(service *service.UserService) *UserHandler {
 
 func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 
-	users := h.service.GetUsers()
-
-	w.Header().Set("Content-Type", "application/json")
+	users, err := h.service.GetUsers(r.Context())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	json.NewEncoder(w).Encode(users)
 }

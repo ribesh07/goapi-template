@@ -1,6 +1,11 @@
 package service
 
-import "goapi/internal/repository"
+import (
+	"context"
+	"goapi/internal/repository"
+
+	db "goapi/internal/store"
+)
 
 type UserService struct {
 	repo *repository.UserRepository
@@ -13,8 +18,6 @@ func NewUserService(repo *repository.UserRepository) *UserService {
 	}
 }
 
-func (s *UserService) GetUsers() []string {
-
-	return s.repo.GetUsers()
-
+func (s *UserService) GetUsers(ctx context.Context) ([]db.User, error) {
+	return s.repo.GetUsers(ctx)
 }
