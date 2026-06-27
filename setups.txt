@@ -1,0 +1,9 @@
+# for up and creation
+
+ migrate \
+-path sql/migrations \
+-database "postgres://postgres:postgres@localhost:5432/goapi?sslmode=disable" \
+up
+
+# for sql generate 
+sqlc generate

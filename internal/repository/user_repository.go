@@ -1,12 +1,14 @@
 package repository
 
-import "goapi/internal/database"
+import (
+	"github.com/jackc/pgx/v5/pgxpool"
+)
 
 type UserRepository struct {
-	db *database.DB
+	db *pgxpool.Pool
 }
 
-func NewUserRepository(db *database.DB) *UserRepository {
+func NewUserRepository(db *pgxpool.Pool) *UserRepository {
 
 	return &UserRepository{
 		db: db,

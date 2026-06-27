@@ -1,8 +1,11 @@
 package database
 
-type DB struct {
-}
+import (
+	"context"
 
-func Connect() *DB {
-	return &DB{}
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+func Connect(databaseURL string) (*pgxpool.Pool, error) {
+	return pgxpool.New(context.Background(), databaseURL)
 }

@@ -2,7 +2,6 @@ package app
 
 import (
 	"fmt"
-	"goapi/internal/database"
 	"goapi/internal/handlers"
 	"goapi/internal/repository"
 	"goapi/internal/routes"
@@ -10,9 +9,10 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func New() *chi.Mux {
+func New(db *pgxpool.Pool) *chi.Mux {
 
 	r := chi.NewRouter()
 
@@ -20,9 +20,6 @@ func New() *chi.Mux {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintln(w, "Go API Server Running")
 	})
-
-	// Database
-	db := database.Connect()
 
 	// Users
 	// Repository
