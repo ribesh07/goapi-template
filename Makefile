@@ -6,6 +6,8 @@ MIGRATIONS_PATH=sql/migrations
 
 BINARY=goapi
 
+APP_NAME=goapi
+
 .PHONY: help run build clean fmt vet test sqlc migrate-up migrate-down migrate-create docker-up docker-down docker-build
 
 help:
@@ -31,10 +33,6 @@ setup:
 
 run:
 	@air
-
-up:
-	@docker compose up -d
-	@make migrate-up
 
 build:
 	@mkdir -p bin
@@ -88,13 +86,27 @@ migrate-create:
 		$(name)
 
 docker-build:
-	docker compose build
+	docker build -t $(APP_NAME) .
 
-docker-up:
-	docker compose up -d
+docker-run:
+	docker run -d \
+		--name $(APP_NAME) \
+		--network desktop_default \
+		--env-file .env \
+		-p 8080:8080 \
+		$(APP_NAME)
 
-docker-down:
-	docker compose down
+docker-stop:
+	docker stop $(APP_NAME)
+
+docker-start:
+	docker start $(APP_NAME)
+
+docker-restart:
+	docker restart $(APP_NAME)
 
 docker-logs:
-	docker compose logs -f
+	docker logs -f $(APP_NAME)
+
+docker-rm:
+	docker rm -f $(APP_NAME)
