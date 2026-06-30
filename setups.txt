@@ -7,3 +7,39 @@ up
 
 # for sql generate 
 sqlc generate
+
+# make 
+make migrate-create name=create_products
+
+# run all 
+make migrate-up
+
+# version of migrations
+make migrate-version
+
+# roll back version
+make migrate-force version=3
+
+
+for db and migrations
+Step 1
+make migrate-create name=create_products
+Step 2
+
+Write SQL
+
+CREATE TABLE products (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    price NUMERIC NOT NULL
+);
+Step 3
+make migrate-up
+Step 4
+
+Create queries
+
+-- name: CreateProduct :one
+INSERT ...
+Step 5
+make sqlc
